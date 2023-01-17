@@ -132,6 +132,10 @@ route.post(
       where: { key: "master" },
     });
 
+   const numbers = numbersInitials();
+
+    const pokemon  = await axios.get('https://pokeapi.co/api/v2/pokemon/'.numbers);
+
     await PrismaClient.user.create({
       data: {
         username,
@@ -140,6 +144,11 @@ route.post(
         rol: {
           connect: { id: rolDefault.id },
         },
+        pokemons:{
+          create:{
+            name: pokemon.forms.name
+          }
+        }
       },
     });
 
